@@ -17,9 +17,10 @@ An npm package for performing basic statistical analysis.
 3. To access all the descriptive statistics of the dataset, you can access the 'value' property of the summary. 
    
    
-   The value property contains the mean, median, mode, max, min, variance, and standard deviation of the dataset.
-
     `summary.value`
+
+    The value property contains the mean, median, mode, max, min, variance, and standard deviation of the dataset.
+
 4. You can access the different descriptive statistics individually using the following:
 
 
