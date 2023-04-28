@@ -1,5 +1,10 @@
-type Group = `${"population" | "sample"}`;
-
+import { Group } from "./types";
+/**
+ * @param name - name of the summary
+ * @param data - data to be processed
+ * @param group - define whether the summary is for a sample or a population
+ * @param rounded - (optional) decimal place to round off the values
+ */
 export default class Descriptive {
     name: string;
     data: Array<number>;
@@ -16,6 +21,7 @@ export default class Descriptive {
     }
 
     sum(): number {
+        console.log(this.data);
         var sum = this.data.reduce((sum, value) => sum + value, 0);
 
         return this.rounded ? parseFloat(sum.toFixed(this.rounded)): sum;
@@ -96,5 +102,17 @@ export default class Descriptive {
         var sumOfSD = squareDeviations.reduce((sum, value) => sum + value, 0);
 
         return this.rounded ? parseFloat(sumOfSD.toFixed(this.rounded)): sumOfSD;
+    }
+
+    summary() {
+        return {
+            mean: this.mean(),
+            median: this.median(),
+            mode: this.mode(),
+            max: this.max(),
+            min: this.min(),
+            variance: this.variance(),
+            standardDeviation: this.standardDeviation()
+        }
     }
 }

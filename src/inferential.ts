@@ -1,13 +1,20 @@
-import { Summary } from "./index";
+import Descriptive from "./descriptive";
 
-class Inferential {
-    summaries: Array<Summary>;
-    numberOfGroups: number;
-    significanceLevel: number;
+export default class Inferential {
+    descriptives: Array<Descriptive>;
 
-    constructor(summaries: Array<Summary>, significanceLevel: number) {
-        this.summaries = summaries;
-        this.numberOfGroups = summaries.length;
-        this.significanceLevel = significanceLevel;
+    constructor (descriptives: Array<Descriptive>) {
+        this.descriptives = descriptives;
     }
+
+    oneSampleT(populationMean: number, descriptiveName: string, rounded: number|false = false) {
+        var descriptive: Descriptive = this.descriptives.filter((descriptive) => descriptive.name == descriptiveName)[0];
+
+        var numerator = ( descriptive.mean() - populationMean );
+        var denominator = (descriptive.standardDeviation()/Math.sqrt(descriptive.size));
+
+        return rounded ? parseFloat(Number(numerator/denominator).toFixed(rounded)): Number(numerator/denominator);
+    }
+    
+    // twoSampleT
 }
