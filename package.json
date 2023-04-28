@@ -1,5 +1,5 @@
 {
-  "name": "basic-stat-npm",
+  "name": "basic-stat",
   "version": "1.0.0",
   "description": "An npm package that provides basic statistical analysis functions.",
   "main": "src/index.ts",

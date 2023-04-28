@@ -1,11 +1,13 @@
 import { Summary } from "./index";
 
-export class Inferential {
-    describes: Array<Summary>;
+class Inferential {
+    summaries: Array<Summary>;
     numberOfGroups: number;
+    significanceLevel: number;
 
-    constructor(describes: Array<Summary>) {
-        this.describes = describes;
-        this.numberOfGroups = describes.length;
+    constructor(summaries: Array<Summary>, significanceLevel: number) {
+        this.summaries = summaries;
+        this.numberOfGroups = summaries.length;
+        this.significanceLevel = significanceLevel;
     }
 }
