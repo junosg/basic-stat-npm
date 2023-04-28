@@ -1,8 +1,5 @@
 type Group = `${"population" | "sample"}`;
 
-
-
-
 export default class Descriptive {
     name: string;
     data: Array<number>;
