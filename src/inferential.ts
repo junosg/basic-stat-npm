@@ -10,8 +10,8 @@ export default class Inferential {
     oneSampleT(populationMean: number, descriptiveName: string, rounded: number|false = false) {
         var descriptive: Descriptive = this.descriptives.filter((descriptive) => descriptive.name == descriptiveName)[0];
 
-        var numerator = ( descriptive.mean() - populationMean );
-        var denominator = (descriptive.standardDeviation()/Math.sqrt(descriptive.size));
+        var numerator = ( descriptive.summary.mean - populationMean );
+        var denominator = ( descriptive.summary.standardDeviation/Math.sqrt(descriptive.size) );
 
         return rounded ? parseFloat(Number(numerator/denominator).toFixed(rounded)): Number(numerator/denominator);
     }

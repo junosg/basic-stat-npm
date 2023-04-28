@@ -1,4 +1,4 @@
-import { Group } from "./types";
+import { Group, Summary } from "./types";
 /**
  * @param name - name of the summary
  * @param data - data to be processed
@@ -9,8 +9,10 @@ export default class Descriptive {
     name: string;
     data: Array<number>;
     group: Group;
-    rounded: number|false;
     size: number;
+    summary: Summary;
+
+    private rounded: number|false;
 
     constructor (name: string, data: Array<number>, group: Group, rounded: number|false = false) {
         this.name = name;
@@ -18,22 +20,31 @@ export default class Descriptive {
         this.group = group;
         this.size = data.length;
         this.rounded = rounded;
+        this.summary = {
+            mean: this.mean(),
+            median: this.median(),
+            mode: this.mode(),
+            max: this.max(),
+            min: this.min(),
+            variance: this.variance(),
+            standardDeviation: this.standardDeviation()
+        }
     }
 
-    sum(): number {
+    private sum(): number {
         console.log(this.data);
         var sum = this.data.reduce((sum, value) => sum + value, 0);
 
         return this.rounded ? parseFloat(sum.toFixed(this.rounded)): sum;
     }
 
-    mean(): number {
+    private mean(): number {
         var mean = this.data.reduce((sum, value) => sum + value, 0)/this.size;
 
         return this.rounded ? parseFloat(mean.toFixed(this.rounded)): mean;
     }
 
-    median(): number {
+    private median(): number {
         var dataCopy: Array<number> = this.data;
         var sortedData: Array<number> = dataCopy.sort((a, b) => a - b);
 
@@ -48,7 +59,7 @@ export default class Descriptive {
         return median;
     }
 
-    mode(): Array<number> {
+    private mode(): Array<number> {
         var counts: Record<number, number> = {};
         var modes: Array<number> = [];
 
@@ -71,15 +82,15 @@ export default class Descriptive {
         return modes;
     }
 
-    max(): number {
+    private max(): number {
         return this.data.reduce((max, current) => current > max ? current: max);
     }
 
-    min(): number {
+    private min(): number {
         return this.data.reduce((min, current) => current < min ? current: min);
     }
 
-    variance(): number {
+    private variance(): number {
         var variance = 0;
         if (this.group == "sample") {
             variance = this.sumOfSquareDeviations()/(this.size - 1);
@@ -90,7 +101,7 @@ export default class Descriptive {
         return this.rounded ? parseFloat(variance.toFixed(this.rounded)): variance;
     }
 
-    standardDeviation(): number {
+    private standardDeviation(): number {
         var standardDeviation = Math.sqrt(this.variance());
 
         return this.rounded ? parseFloat(standardDeviation.toFixed(this.rounded)): standardDeviation;
@@ -104,15 +115,15 @@ export default class Descriptive {
         return this.rounded ? parseFloat(sumOfSD.toFixed(this.rounded)): sumOfSD;
     }
 
-    summary() {
-        return {
-            mean: this.mean(),
-            median: this.median(),
-            mode: this.mode(),
-            max: this.max(),
-            min: this.min(),
-            variance: this.variance(),
-            standardDeviation: this.standardDeviation()
-        }
-    }
+    // summary() {
+    //     return {
+    //         mean: this.mean(),
+    //         median: this.median(),
+    //         mode: this.mode(),
+    //         max: this.max(),
+    //         min: this.min(),
+    //         variance: this.variance(),
+    //         standardDeviation: this.standardDeviation()
+    //     }
+    // }
 }

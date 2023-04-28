@@ -7,30 +7,30 @@ An npm package for performing basic statistical analysis.
 1. Import the Summary class.
 
 
-   `import { Summary } from "@snailcode.net/basic-stat";`
+   `import { Descriptive } from "@snailcode.net/basic-stat";`
 2. Create a new Summary.
 
 
     `const grades = [1, 2, 4, 6, 9];`
     
-    `const summary = new Summary("grades", grades, "sample");`
-3. To access all the descriptive statistics of the dataset, you can access the 'value' property of the summary. 
+    `const stat = new Descriptive("grades", grades, "sample");`
+3. To access all the descriptive statistics of the dataset, you can access the 'summary' property of the summary. 
    
    
-    `summary.value`
+    `stat.summary`
 
     The value property contains the mean, median, mode, max, min, variance, and standard deviation of the dataset.
 
 4. You can access the different descriptive statistics individually using the following:
 
 
-    * mean: `summary.mean()`
-    * median: `summary.median()`
-    * mode: `summary.mode()`
-    * max: `summary.max()`
-    * min: `summary.min()`
-    * variance: `summary.variance()`
-    * standard deviation: `summary.standardDeviation()`
+    * mean: `stat.summary.mean`
+    * median: `stat.summary.median`
+    * mode: `stat.summary.mode`
+    * max: `stat.summary.max`
+    * min: `stat.summary.min`
+    * variance: `stat.summary.variance`
+    * standard deviation: `stat.summary.standardDeviation`
 
 ### Inferential Statistics ###
 ---
