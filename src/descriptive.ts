@@ -1,31 +1,36 @@
 type Group = `${"population" | "sample"}`;
 
+
+
+
 export default class Descriptive {
+    name: string;
     data: Array<number>;
     group: Group;
     rounded: number|false;
     size: number;
 
-    constructor (data: Array<number>, group: Group, rounded: number|false = false) {
+    constructor (name: string, data: Array<number>, group: Group, rounded: number|false = false) {
+        this.name = name;
         this.data = data;
         this.group = group;
         this.size = data.length;
         this.rounded = rounded;
     }
 
-    sum() {
+    sum(): number {
         var sum = this.data.reduce((sum, value) => sum + value, 0);
 
         return this.rounded ? parseFloat(sum.toFixed(this.rounded)): sum;
     }
 
-    mean() {
+    mean(): number {
         var mean = this.data.reduce((sum, value) => sum + value, 0)/this.size;
 
         return this.rounded ? parseFloat(mean.toFixed(this.rounded)): mean;
     }
 
-    median() {
+    median(): number {
         var dataCopy: Array<number> = this.data;
         var sortedData: Array<number> = dataCopy.sort((a, b) => a - b);
 
@@ -40,29 +45,38 @@ export default class Descriptive {
         return median;
     }
 
-    mode(): number {
-        var count: Record<number, number> = {};
+    mode(): Array<number> {
+        var counts: Record<number, number> = {};
+        var modes: Array<number> = [];
 
         this.data.forEach((element) => {
-            if (count.hasOwnProperty(element)) {
-                count[element]++;
+            if (counts.hasOwnProperty(element)) {
+                counts[element]++;
             } else {
-                count[element] = 1;
+                counts[element] = 1;
             }
         });
 
-        return Number(Object.entries(count).reduce((mode, current) => mode[1] < current[1] ? current: mode)[0]);
+        var modeCount = Object.entries(counts).reduce((mode, current) => mode[1] < current[1] ? current: mode)[1];
+
+        Object.entries(counts).forEach((count) => {
+            if (count[1] == modeCount) {
+                modes.push(Number(count[0]));
+            }
+        });
+
+        return modes;
     }
 
-    max() {
+    max(): number {
         return this.data.reduce((max, current) => current > max ? current: max);
     }
 
-    min() {
+    min(): number {
         return this.data.reduce((min, current) => current < min ? current: min);
     }
 
-    variance() {
+    variance(): number {
         var variance = 0;
         if (this.group == "sample") {
             variance = this.sumOfSquareDeviations()/(this.size - 1);
@@ -73,13 +87,13 @@ export default class Descriptive {
         return this.rounded ? parseFloat(variance.toFixed(this.rounded)): variance;
     }
 
-    standardDeviation() {
+    standardDeviation(): number {
         var standardDeviation = Math.sqrt(this.variance());
 
         return this.rounded ? parseFloat(standardDeviation.toFixed(this.rounded)): standardDeviation;
     }
 
-    private sumOfSquareDeviations() {
+    private sumOfSquareDeviations(): number {
         var squareDeviations = this.data.map((value) => Math.pow((value - this.mean()), 2));
 
         var sumOfSD = squareDeviations.reduce((sum, value) => sum + value, 0);
